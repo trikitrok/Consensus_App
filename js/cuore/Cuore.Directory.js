@@ -41,6 +41,5 @@ CUORE.Directory = CUORE.Class(null, {
 
     _addBuiltinServices: function() {
         this.add(new CUORE.Services.Label());
-        this.add(new CUORE.Services.Button());
     }
 });
