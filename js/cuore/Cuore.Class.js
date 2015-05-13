@@ -3,6 +3,7 @@ CUORE.Class = function(Parent, props) {
     var hasOwn = Object.prototype.hasOwnProperty;
 
     var Child = function() {
+            if (!Child.prototype.init)  throw "Parent class not found maybe you forgot to include the base Class";
             Child.prototype.init.apply(this, arguments);
         };
 
