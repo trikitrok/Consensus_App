@@ -22,7 +22,7 @@ CUORE.Page = CUORE.Class(null, {
         this.components.register(component);
 
         component.setContainer(container);
-        component.onEnvironmentUp();
+        component.onEnvironmentUp(this);
     },
 
     draw: function() {
