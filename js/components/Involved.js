@@ -23,15 +23,7 @@ Involved = CUORE.Class(CUORE.Component, {
       this.updateRender;
     },
 
-    updateRender: function() {
-      if(!this.container) return;
-        this.draw();
-    },
-
-    setContainer: function(container) {
-      this.container=container
-    },
-
+    
     onEnvironmentUp: function(page) {
       page.getService("NAMES").execute("generate");
     },

@@ -6,7 +6,6 @@ CUORE.Component = CUORE.Class(null, {
         this.procedure = 'nullProcedure';
         this.SEPARATOR = '_';
         this.labels = {};
-        this.renderer = new CUORE.Renderer();
         this.enabled = true;
     },
 
@@ -20,15 +19,15 @@ CUORE.Component = CUORE.Class(null, {
     },
 
     draw: function() {
-        this.renderer.render(this);
     },
 
     updateRender: function() {
-        this.renderer.update(this);
+      if(!this.container) return;
+        this.draw();
     },
 
+
     destroy: function() {
-        this.renderer.erase();
         CUORE.Bus.unsubscribe(this, this.getManagedEvents());
     },
 
@@ -51,13 +50,6 @@ CUORE.Component = CUORE.Class(null, {
         this.addHandler(eventName, new CUORE.Handlers.Executor(handler));
     },
 
-    addClass: function(aClass) {
-        this.renderer.addClass(aClass);
-    },
-
-    removeClass: function(aClass) {
-        this.renderer.removeClass(aClass);
-    },
 
     getText: function(key) {
         if(!key) return null;
@@ -73,8 +65,8 @@ CUORE.Component = CUORE.Class(null, {
         this.name = aName;
     },
 
-    setContainer: function(container) {
-        this.renderer.setContainer(container);
+     setContainer: function(container) {
+      this.container=container
     },
 
     getManagedEvents: function() {
@@ -114,10 +106,6 @@ CUORE.Component = CUORE.Class(null, {
             }, true);
     },
 
-    setRenderer: function(renderer) {
-        this.renderer = renderer;
-    },
-
     isEnabled: function() {
         return this.enabled;
     },
@@ -132,11 +120,6 @@ CUORE.Component = CUORE.Class(null, {
         this.updateRender();
     },
 
-    addDecoration: function(decoration) {
-        if (decoration instanceof CUORE.Decoration) {
-            this.renderer.addDecoration(decoration);
-        }
-    },
 
     onEnvironmentUp: function() {},
 
