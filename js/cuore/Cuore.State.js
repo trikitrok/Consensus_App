@@ -22,17 +22,36 @@ CUORE.State = CUORE.Class(null, {
     },
 
     save: function(key, value) {
+        if (key === undefined) return;
+        if (value === undefined) return;
+        this._save_in_page(key,value);
+        this._save_local(key,value);
+    },
+
+    _save_in_page: function(key, value) {
         this._addKey(key);
         this.map[key] = value;
+    },
 
-        if (value === undefined) {
-            this._removeKey(key);
+    _save_local: function(key,value){
+        window.localStorage.setItem(key,value);
+    },
+
+
+    _from_local: function(key){
+        var fromLocal = window.localStorage.getItem(key);
+        if (fromLocal != undefined){
+            this._save_in_page(key,fromLocal);
         }
+        return fromLocal;
+    },
 
+    delete: function(key) {
+            this._removeKey(key);
     },
 
     retrieve: function(key) {
-        if (!this.hasKey(key)) return undefined;
+        if (!this.hasKey(key)) return this._from_local(key);
         return this.map[key];
     }
     

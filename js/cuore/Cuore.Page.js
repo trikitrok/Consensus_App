@@ -18,13 +18,13 @@ CUORE.Page = CUORE.Class(null, {
     addComponent: function(component, container) {
         component.setDirectory(this.services);
         this.components.register(component);
-
         component.setContainer(container);
-        component.onEnvironmentUp(this);
     },
 
     draw: function() {
+        var self=this;
         this.components.each(function(component) {
+            component.onEnvironmentUp(self);
             component.draw();
         });
     },
