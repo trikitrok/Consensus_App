@@ -15,10 +15,8 @@ CUORE.Page = CUORE.Class(null, {
     initializeServices: function() {},
     initializeComponents: function() {},
 
-    addComponent: function(component, container, behaviour) {
+    addComponent: function(component, container) {
         component.setDirectory(this.services);
-
-        if(behaviour) component.behave(behaviour);
         this.components.register(component);
 
         component.setContainer(container);

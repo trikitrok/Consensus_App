@@ -8,7 +8,6 @@ CUORE.Component = CUORE.Class(null, {
         this.labels = {};
         this.renderer = new CUORE.Renderer();
         this.enabled = true;
-        this.behaviour = CUORE.Behaviours.APPEND;
     },
 
     setHandlerSet: function(handlerSet) {
@@ -18,18 +17,6 @@ CUORE.Component = CUORE.Class(null, {
     setDirectory: function(directory) {
         this.services = directory;
         this.requestLabelText();
-    },
-
-    behave: function(behaviour) {
-        this.behaviour = behaviour;
-    },
-
-    doYouReplace: function() {
-        return this.behaviour === CUORE.Behaviours.REPLACE;
-    },
-
-    doYouHijack: function() {
-        return this.behaviour === CUORE.Behaviours.HIJACK;
     },
 
     draw: function() {
@@ -87,7 +74,6 @@ CUORE.Component = CUORE.Class(null, {
     },
 
     setContainer: function(container) {
-        if (this.doYouHijack()) this.setName(container);
         this.renderer.setContainer(container);
     },
 
