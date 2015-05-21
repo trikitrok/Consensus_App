@@ -7,15 +7,15 @@ CUORE.Dom.ready(function() {
   };
   
   FIRST_NAMES = [
-    "Jon","Alfred", "Mary"
+    "Big","Long", "Short","Small","Slow","Fast"
   ];
 
   MIDDLE_NAMES = [
-    "Bon","Penny", "Pickford"
+    "Horny","Stupid", "Red","Blue","Yellow","Awful"
   ];
 
   LAST_NAMES = [
-    "Jovi","Weather", "Smith"
+    "Panda","Fox","Parrot","Armadillo","Babirusa","Condor","Porcupine","Peacock"
   ];
   
   CUORE.Bus.enableDebug();

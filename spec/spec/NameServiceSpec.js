@@ -5,11 +5,11 @@ describe("NameService", function() {
     ];
 
     MIDDLE_NAMES = [
-      "Jon","Alfred", "Mary"
+      "Bon","Penny", "Pickford"
     ];
 
     LAST_NAMES = [
-      "Jon","Alfred", "Mary"
+      "Jovi","Weather", "Smith"
     ];
 
     var aNameService;
@@ -34,22 +34,26 @@ describe("NameService", function() {
 
     });
 
-    it('gets the name from the apropiate list', function() {
-      var generatedName = retrieveGeneratedName();
-      var name = generatedName.split(" ")[0]
-      expect(FIRST_NAMES).toContain(name);
-    });
+    describe('when a name is generated', function() {
 
-    it('gets the middle name from the apropiate list', function() {
-      var generatedName = retrieveGeneratedName();
-      var middle = generatedName.split(" ")[1]
-      expect(MIDDLE_NAMES).toContain(middle);
-    });
+        it('name comes from the apropiate list', function() {
+          var generatedName = retrieveGeneratedName();
+          var name = generatedName.split(" ")[0]
+          expect(FIRST_NAMES).toContain(name);
+        });
 
-    it('gets the last name from the apropiate list', function() {
-      var generatedName = retrieveGeneratedName();
-      var last = generatedName.split(" ")[2]
-      expect(LAST_NAMES).toContain(last);
+        it('middle name comes from the apropiate list', function() {
+          var generatedName = retrieveGeneratedName();
+          var middle = generatedName.split(" ")[1]
+          expect(MIDDLE_NAMES).toContain(middle);
+        });
+
+        it('last name comes from the apropiate list', function() {
+          var generatedName = retrieveGeneratedName();
+          var last = generatedName.split(" ")[2]
+          expect(LAST_NAMES).toContain(last);
+        });
+      
     });
 
     var retrieveGeneratedName = function() {
