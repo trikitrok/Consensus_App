@@ -1,25 +1,39 @@
 CUORE.Bus = (function(undefined) {
+    var subscriptions = [],
+        debugModeON = false;
 
-    var subscriptions = [];
-    var debugModeON = false;
+    function Subscription(subscriber, eventName) {
+        this.subscriber = subscriber;
+        this.eventName = eventName;
+    }
 
-    var subscribe = function(subscriber, eventName) {
-            if (!_validSubscriber(subscriber)) throw new Error("Not a subscriber (lacks eventDispatch function)");
-            if (!_subscriptionExists(subscriber, eventName)) {
-                subscriptions.push([subscriber, eventName]);
-            }
-        };
+    Subscription.prototype.equals = function(otherSubscription) {
+        var sameSubscriber = (this.subscriber === otherSubscription.subscriber),
+            sameEvent = (this.eventName === otherSubscription.eventName);
+
+        return (sameSubscriber && sameEvent);
+    };
+
+    function subscribe (subscriber, eventName) {
+        if (!_validSubscriber(subscriber)) {
+            throw new Error("Not a subscriber (lacks eventDispatch function)");
+        }
+
+        if (!_subscriptionExists(subscriber, eventName)) {
+            subscriptions.push(new Subscription(subscriber, eventName));
+        }
+    };
 
     var unsubscribe = function(subscriber, events) {
+            var i;
 
             if (typeof events == "string") {
-                _removeSubscription([subscriber, events]);
+                _removeSubscription(new Subscription(subscriber, events));
                 return;
             }
 
-            for (var i = 0, len = events.length; i < len; i++) {
-                var theSubscription = [subscriber, events[i]];
-                _removeSubscription(theSubscription);
+            for (i = 0; i < events.length; i++) {
+                _removeSubscription(new Subscription(subscriber, events[i]));
             }
         };
 
@@ -31,8 +45,8 @@ CUORE.Bus = (function(undefined) {
             var selectedSubscribers = [];
             for (var i = 0, len = subscriptions.length; i < len; i++) {
                 var subscription = subscriptions[i];
-                if (subscription[1] === theEvent) {
-                    selectedSubscribers.push(subscription[0]);
+                if (subscription.eventName === theEvent) {
+                    selectedSubscribers.push(subscription.subscriber);
                 }
             }
             return selectedSubscribers;
@@ -51,33 +65,27 @@ CUORE.Bus = (function(undefined) {
             }
         };
 
-    
     var _subscriptionExists = function(subscriber, eventName) {
-            var result = false;
-            var theSubscription = [subscriber, eventName];
+            var i, len = subscriptions.length,
+                theSubscription = new Subscription(subscriber, eventName);
 
-            for (var i = 0, len = subscriptions.length; i < len; i++) {
-                var subscription = subscriptions[i];
-                var sameSubscriber = (subscription[0] === theSubscription[0]);
-                var sameEvent = (subscription[1] === theSubscription[1]);
-                if (sameSubscriber && sameEvent) {
-                    result = true;
-                    break;
+            for (i = 0; i < len; i++) {
+                if (theSubscription.equals(subscriptions[i])) {
+                    return true;
                 }
             }
-            return result;
+            return false;
         }
 
     var _removeSubscription = function(theSubscription) {
+            var i, len = subscriptions.length;
 
-            for (var i = 0, subscription; subscription = subscriptions[i]; i++) {
-                var sameSubscriber = (subscription[0] === theSubscription[0]);
-                var sameEvent = (subscription[1] === theSubscription[1]);
-                if (sameSubscriber && sameEvent) {
+            for (i = 0; i < len; i++) {
+                if (theSubscription.equals(subscriptions[i])) {
                     subscriptions.splice(i, 1);
+                    return;
                 }
             }
-
         };
 
     var _validSubscriber = function(subscriber) {
@@ -107,5 +115,4 @@ CUORE.Bus = (function(undefined) {
         enableDebug: enableDebug,
         disableDebug: disableDebug
     };
-
 })();
