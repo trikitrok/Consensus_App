@@ -1,3 +1,5 @@
+"use strict";
+
 CUORE.Bus = (function(undefined) {
     var subscriptions = [],
         debugModeON = false;
@@ -53,9 +55,12 @@ CUORE.Bus = (function(undefined) {
     }
 
     function subscribers(theEvent) {
-        var selectedSubscribers = [];
-        for (var i = 0, len = subscriptions.length; i < len; i++) {
-            var subscription = subscriptions[i];
+        var selectedSubscribers = [],
+            i, subscription,
+            len = subscriptions.length;
+
+        for (i = 0; i < len; i++) {
+            subscription = subscriptions[i];
             if (subscription.eventName === theEvent) {
                 selectedSubscribers.push(subscription.subscriber);
             }
@@ -64,14 +69,15 @@ CUORE.Bus = (function(undefined) {
     }
 
     function emit(eventName, params) {
-        var subscribersList = this.subscribers(eventName);
+        var subscribersList = this.subscribers(eventName),
+            i, len = subscribersList.length;
 
         debug("Bus.emit (event, params)");
         debug(eventName);
         debug(params);
         debug("------------");
 
-        for (var i = 0, len = subscribersList.length; i < len; i++) {
+        for (i = 0; i < len; i++) {
             subscribersList[i].eventDispatch(eventName, params);
         }
     }
