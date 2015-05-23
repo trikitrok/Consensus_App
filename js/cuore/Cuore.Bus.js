@@ -1,3 +1,5 @@
+"use strict";
+
 CUORE.Bus = (function(undefined) {
     var subscriptions = [],
         debugModeON = false;
@@ -12,7 +14,7 @@ CUORE.Bus = (function(undefined) {
         disableDebug: disableDebug
     };
 
-    function aSubscription(subscriber, eventName) {
+    function createSubscription(subscriber, eventName) {
         return {
             subscriber: subscriber,
             eventName: eventName,
@@ -31,7 +33,7 @@ CUORE.Bus = (function(undefined) {
         }
 
         if (!_subscriptionExists(subscriber, eventName)) {
-            subscriptions.push(aSubscription(subscriber, eventName));
+            subscriptions.push(createSubscription(subscriber, eventName));
         }
     }
 
@@ -39,12 +41,12 @@ CUORE.Bus = (function(undefined) {
         var i;
 
         if (typeof events == "string") {
-            _removeSubscription(aSubscription(subscriber, events));
+            _removeSubscription(createSubscription(subscriber, events));
             return;
         }
 
         for (i = 0; i < events.length; i++) {
-            _removeSubscription(aSubscription(subscriber, events[i]));
+            _removeSubscription(createSubscription(subscriber, events[i]));
         }
     }
 
@@ -53,9 +55,12 @@ CUORE.Bus = (function(undefined) {
     }
 
     function subscribers(theEvent) {
-        var selectedSubscribers = [];
-        for (var i = 0, len = subscriptions.length; i < len; i++) {
-            var subscription = subscriptions[i];
+        var selectedSubscribers = [],
+            i, subscription,
+            len = subscriptions.length;
+
+        for (i = 0; i < len; i++) {
+            subscription = subscriptions[i];
             if (subscription.eventName === theEvent) {
                 selectedSubscribers.push(subscription.subscriber);
             }
@@ -64,14 +69,15 @@ CUORE.Bus = (function(undefined) {
     }
 
     function emit(eventName, params) {
-        var subscribersList = this.subscribers(eventName);
+        var subscribersList = this.subscribers(eventName),
+            i, len = subscribersList.length;
 
         debug("Bus.emit (event, params)");
         debug(eventName);
         debug(params);
         debug("------------");
 
-        for (var i = 0, len = subscribersList.length; i < len; i++) {
+        for (i = 0; i < len; i++) {
             subscribersList[i].eventDispatch(eventName, params);
         }
     }
@@ -92,7 +98,7 @@ CUORE.Bus = (function(undefined) {
 
     function _subscriptionExists(subscriber, eventName) {
         var i, len = subscriptions.length,
-            theSubscription = aSubscription(subscriber, eventName);
+            theSubscription = createSubscription(subscriber, eventName);
 
         for (i = 0; i < len; i++) {
             if (theSubscription.equals(subscriptions[i])) {
