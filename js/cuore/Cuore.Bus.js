@@ -2,17 +2,18 @@ CUORE.Bus = (function(undefined) {
     var subscriptions = [],
         debugModeON = false;
 
-    function Subscription(subscriber, eventName) {
-        this.subscriber = subscriber;
-        this.eventName = eventName;
+    function aSubscription(subscriber, eventName) {
+        return {
+            subscriber: subscriber,
+            eventName: eventName,
+            equals: function(otherSubscription) {
+                var sameSubscriber = (this.subscriber === otherSubscription.subscriber),
+                    sameEvent = (this.eventName === otherSubscription.eventName);
+
+                return (sameSubscriber && sameEvent);
+            }
+        };
     }
-
-    Subscription.prototype.equals = function(otherSubscription) {
-        var sameSubscriber = (this.subscriber === otherSubscription.subscriber),
-            sameEvent = (this.eventName === otherSubscription.eventName);
-
-        return (sameSubscriber && sameEvent);
-    };
 
     function subscribe (subscriber, eventName) {
         if (!_validSubscriber(subscriber)) {
@@ -20,7 +21,7 @@ CUORE.Bus = (function(undefined) {
         }
 
         if (!_subscriptionExists(subscriber, eventName)) {
-            subscriptions.push(new Subscription(subscriber, eventName));
+            subscriptions.push(aSubscription(subscriber, eventName));
         }
     }
 
@@ -28,12 +29,12 @@ CUORE.Bus = (function(undefined) {
         var i;
 
         if (typeof events == "string") {
-            _removeSubscription(new Subscription(subscriber, events));
+            _removeSubscription(aSubscription(subscriber, events));
             return;
         }
 
         for (i = 0; i < events.length; i++) {
-            _removeSubscription(new Subscription(subscriber, events[i]));
+            _removeSubscription(aSubscription(subscriber, events[i]));
         }
     }
 
@@ -67,7 +68,7 @@ CUORE.Bus = (function(undefined) {
 
     function _subscriptionExists(subscriber, eventName) {
         var i, len = subscriptions.length,
-            theSubscription = new Subscription(subscriber, eventName);
+            theSubscription = aSubscription(subscriber, eventName);
 
         for (i = 0; i < len; i++) {
             if (theSubscription.equals(subscriptions[i])) {
