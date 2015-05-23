@@ -2,6 +2,16 @@ CUORE.Bus = (function(undefined) {
     var subscriptions = [],
         debugModeON = false;
 
+    return {
+        subscribe: subscribe,
+        unsubscribe: unsubscribe,
+        hasSubscriptions: hasSubscriptions,
+        subscribers: subscribers,
+        emit: emit,
+        enableDebug: enableDebug,
+        disableDebug: disableDebug
+    };
+
     function aSubscription(subscriber, eventName) {
         return {
             subscriber: subscriber,
@@ -66,6 +76,20 @@ CUORE.Bus = (function(undefined) {
         }
     }
 
+    function debug(object) {
+        if (debugModeON) {
+            console.log(object);
+        }
+    }
+
+    function enableDebug() {
+        debugModeON = true;
+    }
+
+    function disableDebug() {
+        debugModeON = false;
+    }
+
     function _subscriptionExists(subscriber, eventName) {
         var i, len = subscriptions.length,
             theSubscription = aSubscription(subscriber, eventName);
@@ -92,28 +116,4 @@ CUORE.Bus = (function(undefined) {
     function _validSubscriber(subscriber) {
         return subscriber.eventDispatch;
     }
-
-    function debug(object) {
-        if (debugModeON) {
-            console.log(object);
-        }
-    }
-
-    function enableDebug() {
-        debugModeON = true;
-    }
-
-    function disableDebug() {
-        debugModeON = false;
-    }
-
-    return {
-        subscribe: subscribe,
-        unsubscribe: unsubscribe,
-        hasSubscriptions: hasSubscriptions,
-        subscribers: subscribers,
-        emit: emit,
-        enableDebug: enableDebug,
-        disableDebug: disableDebug
-    };
 })();
