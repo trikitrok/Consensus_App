@@ -14,26 +14,13 @@ CUORE.Bus = (function(undefined) {
         disableDebug: disableDebug
     };
 
-    function createSubscription(subscriber, eventName) {
-        return {
-            subscriber: subscriber,
-            eventName: eventName,
-            equals: function(otherSubscription) {
-                var sameSubscriber = (this.subscriber === otherSubscription.subscriber),
-                    sameEvent = (this.eventName === otherSubscription.eventName);
-
-                return (sameSubscriber && sameEvent);
-            }
-        };
-    }
-
     function subscribe (subscriber, eventName) {
         if (!_validSubscriber(subscriber)) {
             throw new Error("Not a subscriber (lacks eventDispatch function)");
         }
 
         if (!_subscriptionExists(subscriber, eventName)) {
-            subscriptions.push(createSubscription(subscriber, eventName));
+            subscriptions.push(_createSubscription(subscriber, eventName));
         }
     }
 
@@ -41,12 +28,12 @@ CUORE.Bus = (function(undefined) {
         var i;
 
         if (typeof events == "string") {
-            _removeSubscription(createSubscription(subscriber, events));
+            _removeSubscription(_createSubscription(subscriber, events));
             return;
         }
 
         for (i = 0; i < events.length; i++) {
-            _removeSubscription(createSubscription(subscriber, events[i]));
+            _removeSubscription(_createSubscription(subscriber, events[i]));
         }
     }
 
@@ -98,7 +85,7 @@ CUORE.Bus = (function(undefined) {
 
     function _subscriptionExists(subscriber, eventName) {
         var i, len = subscriptions.length,
-            theSubscription = createSubscription(subscriber, eventName);
+            theSubscription = _createSubscription(subscriber, eventName);
 
         for (i = 0; i < len; i++) {
             if (theSubscription.equals(subscriptions[i])) {
@@ -121,5 +108,18 @@ CUORE.Bus = (function(undefined) {
 
     function _validSubscriber(subscriber) {
         return subscriber.eventDispatch;
+    }
+
+    function _createSubscription(subscriber, eventName) {
+        return {
+            subscriber: subscriber,
+            eventName: eventName,
+            equals: function(otherSubscription) {
+                var sameSubscriber = (this.subscriber === otherSubscription.subscriber),
+                    sameEvent = (this.eventName === otherSubscription.eventName);
+
+                return (sameSubscriber && sameEvent);
+            }
+        };
     }
 })();
