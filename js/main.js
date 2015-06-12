@@ -6,18 +6,6 @@ CUORE.Dom.ready(function() {
       "a.key": "a literal",
   };
   
-  FIRST_NAMES = [
-    "Big","Long", "Short","Small","Slow","Fast"
-  ];
-
-  MIDDLE_NAMES = [
-    "Horny","Stupid", "Red","Blue","Yellow","Awful"
-  ];
-
-  LAST_NAMES = [
-    "Panda","Fox","Parrot","Armadillo","Babirusa","Condor","Porcupine","Peacock"
-  ];
-  
   CUORE.Bus.enableDebug();
 
   document.page = new FirstTime();
