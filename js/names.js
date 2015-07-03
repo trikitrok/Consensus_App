@@ -23,3 +23,5 @@ FIRST_NAMES = [
     'Nieuwenhuis','Ostergaard','Pankhurst','Philips','Poch','Rankin','Relgis','Ryner','Saulière','Selenka',
     'Starhawk','Stewart','Tolstoy','Vonnegut','Westerweel','Willcox','Wolfe','Woodcock'
   ];
+
+  HTML_LOREM_IPSUM="<h1>This is a proposal</h1><p>Here is the text of our proposal</p>";
