@@ -15,16 +15,24 @@ ReactClasses={
       displayName: "Proposal",
       
       render: function() {
+
         return (
           React.createElement("span", null, 
             React.createElement("article", {dangerouslySetInnerHTML: {__html: this.props.proposal}}),
-            React.createElement("button",{"onClick": this.send},this.props.action) 
+            this.getAdvice(this.props.showAdvice),
+            React.createElement("button",{"onClick": this.send},this.props.action)
           )
         );
       },
 
       send: function() {
         CUORE.Bus.emit("proposal_submit", this.retrieveText());
+      },
+
+      getAdvice: function(mustShow) {
+        if (!this.props.showAdvice)return null;
+        return React.createElement("p",null,this.props.advice);
+
       },
 
       retrieveText: function(){

@@ -4,6 +4,7 @@ CUORE.Dom.ready(function() {
   document.labels = {};
   document.labels[currentLocale] = {
       "proposal.button": "hacer propuesta",
+      "proposal.advice": "Es importante leerla bien antes de hacer submit",
   };
   
   CUORE.Bus.enableDebug();
