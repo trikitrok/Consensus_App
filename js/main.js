@@ -3,7 +3,7 @@ CUORE.Dom.ready(function() {
   
   document.labels = {};
   document.labels[currentLocale] = {
-      "a.key": "a literal",
+      "proposal.button": "hacer propuesta",
   };
   
   CUORE.Bus.enableDebug();
@@ -11,4 +11,6 @@ CUORE.Dom.ready(function() {
   document.page = new FirstTime();
 
   document.page.draw();
+
+  grande.bind(document.querySelectorAll("article"));
 });
