@@ -13,14 +13,26 @@ ReactClasses={
   proposal: function(){
     var proposal = React.createClass({
       displayName: "Proposal",
+      
       render: function() {
         return (
           React.createElement("span", null, 
             React.createElement("article", {dangerouslySetInnerHTML: {__html: this.props.proposal}}),
-            React.createElement("button",null,this.props.action) 
+            React.createElement("button",{"onClick": this.send},this.props.action) 
           )
         );
+      },
+
+      send: function() {
+        CUORE.Bus.emit("proposal_submit", this.retrieveText());
+      },
+
+      retrieveText: function(){
+        var theNode = this.getDOMNode(); 
+        return theNode.firstChild.innerHTML;
       }
+
+
     });
     return proposal;
   }

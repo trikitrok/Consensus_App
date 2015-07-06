@@ -3,7 +3,7 @@ CUORE.Dom.ready(function() {
   
   document.labels = {};
   document.labels[currentLocale] = {
-      "a.key": "a literal",
+      "proposal.button": "hacer propuesta",
   };
   
   CUORE.Bus.enableDebug();
