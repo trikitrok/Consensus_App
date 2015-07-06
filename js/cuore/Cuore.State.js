@@ -23,9 +23,14 @@ CUORE.State = CUORE.Class(null, {
 
     save: function(key, value) {
         if (key === undefined) return;
-        if (value === undefined) return;
-        this._save_in_page(key,value);
-        this._save_local(key,value);
+
+        if (value === undefined || value === null) {
+            this.delete(key);
+            return;
+        }
+
+        this._save_in_page(key, value);
+        this._save_local(key, value);
     },
 
     _save_in_page: function(key, value) {
@@ -33,26 +38,29 @@ CUORE.State = CUORE.Class(null, {
         this.map[key] = value;
     },
 
-    _save_local: function(key,value){
-        window.localStorage.setItem(key,value);
+    _save_local: function(key, value) {
+        window.localStorage.setItem(key, value);
     },
 
-
-    _from_local: function(key){
+    _from_local: function(key) {
         var fromLocal = window.localStorage.getItem(key);
-        if (fromLocal != undefined){
-            this._save_in_page(key,fromLocal);
+
+        if(fromLocal === null || fromLocal === undefined) {
+            return;
         }
+
+        this._save_in_page(key, fromLocal);
         return fromLocal;
     },
 
     delete: function(key) {
-            this._removeKey(key);
+        this._removeKey(key);
     },
 
     retrieve: function(key) {
-        if (!this.hasKey(key)) return this._from_local(key);
+        if (!this.hasKey(key)) {
+            return this._from_local(key);
+        }
         return this.map[key];
     }
-    
 });
