@@ -3,52 +3,66 @@ Proposal = CUORE.Class(CUORE.Component, {
     init: function() {
       Proposal.parent.init.call(this);
       this.adviceShown=false;
+      this.mode=this.EDIT;
       this.div = ReactClasses.proposal();
-      this.internationalize();
-      
-      this.addExecHandler("proposal_submit","submitProposal");
+      this._internationalize();
+      this._wireEvents();
     },
 
     draw: function(){
-    
-      var data = {
+      React.render(
+        React.createElement(this.div,this._prepareData()),
+        document.getElementById(this.container)
+      );
+
+      grande.bind(document.querySelectorAll("article.edit"));
+    },
+
+    _prepareData: function(){
+      return{
           "proposal": HTML_LOREM_IPSUM,
           "action": this.getText(this.buttonKey),
           "showAdvice": this.adviceShown,
           "advice": this.getText(this.adviceKey),
+          "mode": this.mode,
         };
-     
-
-      React.render(
-        React.createElement(this.div,data),
-        document.getElementById(this.container)
-      );
     },
+
 
     submitProposal: function(text){
-      if (this.isFirstTry()){
-        this.showAdvice();
+      if (this._isFirstTry()){
+        this._showAdvice();
       }
       else{
-        this.registerProposal(text);
+        this._registerProposal(text);
       }
     },
 
-    isFirstTry: function(){
+    _isFirstTry: function(){
       return !this.adviceShown
     },
 
-    showAdvice: function(){
+    chooseMode: function(proposal){
+      if(!proposal){
+        this.mode="edit";
+      }
+      else{
+        this.mode="show";
+      }
+
+      this.updateRender(); 
+    },
+
+    _showAdvice: function(){
       this.adviceShown = true;
       this.updateRender(); 
     },
 
-    registerProposal: function(text){
-      console.log(text);
-      console.log("Proposal submitted")
+    _registerProposal: function(text){
+      this.execute("PROPOSALS","register",text);
     },
 
-    internationalize: function(){
+    _internationalize: function(){
       this.buttonKey="proposal.button";
       this.adviceKey="proposal.advice";
       
@@ -56,5 +70,14 @@ Proposal = CUORE.Class(CUORE.Component, {
       this.setI18NKey(this.adviceKey);
     },
 
+    _wireEvents: function() {
+      this.addExecHandler("proposal_submit","submitProposal");
+      this.addExecHandler("PROPOSALS_register_EXECUTED","chooseMode");
+      this.addExecHandler("PROPOSALS_current_EXECUTED","chooseMode");
+    },
+
+    onEnvironmentUp: function(page) {
+      page.getService("PROPOSALS").execute("current");
+    },
 
 });

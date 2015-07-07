@@ -12,6 +12,4 @@ CUORE.Dom.ready(function() {
   document.page = new FirstTime();
 
   document.page.draw();
-
-  grande.bind(document.querySelectorAll("article"));
 });
