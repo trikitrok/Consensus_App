@@ -5,6 +5,10 @@ CUORE.Dom.ready(function() {
   document.labels[currentLocale] = {
       "proposal.button": "hacer propuesta",
       "proposal.advice": "Es importante leerla bien antes de hacer submit",
+      "proposal.ask": "?",
+      "proposal.question.button": "Mandar mi pregunta",
+      "question.list.header": "Clarifying questions.",
+      "proposal.question.placeHolder": "haz aqui tu pregunta"
   };
   
   CUORE.Bus.enableDebug();
