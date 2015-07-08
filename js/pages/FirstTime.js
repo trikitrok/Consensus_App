@@ -10,6 +10,7 @@ var FirstTime = CUORE.Class(CUORE.Page, {
     this.addComponent(new Involved(),'involved');
     this.addComponent(new Proposal(),'proposal');
     this.addComponent(new Question(),'theQuestion');
+    this.addComponent(new QuestionList(),'questionList');
   },
 
 });

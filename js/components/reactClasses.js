@@ -10,6 +10,51 @@ ReactClasses={
     return comment;
   },
 
+  clarifyingQuestion: function(){
+    var question = React.createClass({
+      displayName: "ClarifyingQuestion",
+      render: function() {
+        return (React.createElement("p",null,this.props.text));
+      }
+    });
+    return question;
+  },
+
+  questionList: function(){
+    var list = React.createClass({
+      displayName: "QuestionList",
+
+      render: function() {
+        return (
+          React.createElement("span",{
+              "className": this.hidden()
+            }, 
+            React.createElement("h2",null,this.props.header),
+            this.renderQuestions()
+          )
+        );
+      },
+
+      renderQuestions: function(){
+        var questions = this.props.questions.map(function (aQuestion) {
+            return (
+              React.createElement(ReactClasses.clarifyingQuestion(), aQuestion)
+            );
+          });
+        return questions;
+      },
+
+      hidden: function () {
+        var hidden="";
+        if (this.props.questions.length == 0 ) hidden="hidden";
+        return hidden;
+      }
+
+    });
+    return list;
+  },
+
+
   proposal: function(){
     var proposal = React.createClass({
       displayName: "Proposal",
