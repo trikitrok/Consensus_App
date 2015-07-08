@@ -32,6 +32,10 @@ ReactClasses={
         CUORE.Bus.emit("proposal_submit", this.retrieveText());
       },
 
+      ask: function() {
+        CUORE.Bus.emit("address_question","a Question is addressed") ;
+      },
+
       prevent: function(e) {
         e.preventDefault();
       },
@@ -49,8 +53,17 @@ ReactClasses={
       },
 
       getButton: function(){
-        if (this.inShowMode() )return null;
+        if (this.inShowMode() )return this.questionButton();
+        return this.proposalButton();
+      },
+
+      proposalButton: function  () {
         return React.createElement("button",{"onClick": this.send},this.props.action);
+      },
+
+
+      questionButton: function  () {
+        return React.createElement("button",{"onClick": this.ask},this.props.ask);
       },
 
       retrieveText: function(){

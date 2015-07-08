@@ -22,6 +22,7 @@ Proposal = CUORE.Class(CUORE.Component, {
       return{
           "proposal": HTML_LOREM_IPSUM,
           "action": this.getText(this.buttonKey),
+          "ask": this.getText(this.askKey),
           "showAdvice": this.adviceShown,
           "advice": this.getText(this.adviceKey),
           "mode": this.mode,
@@ -65,9 +66,11 @@ Proposal = CUORE.Class(CUORE.Component, {
     _internationalize: function(){
       this.buttonKey="proposal.button";
       this.adviceKey="proposal.advice";
+      this.askKey="proposal.ask";
       
       this.setI18NKey(this.buttonKey);
       this.setI18NKey(this.adviceKey);
+      this.setI18NKey(this.askKey);
     },
 
     _wireEvents: function() {
