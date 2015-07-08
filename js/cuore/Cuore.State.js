@@ -29,13 +29,17 @@ CUORE.State = CUORE.Class(null, {
     save: function(key, value) {
         if (key === undefined) return;
 
-        if (value === undefined || value === null) {
+        if (should_delete(value)) {
             this.delete(key);
             return;
         }
 
         this._save_in_page(key, value);
         this._save_local(key, value);
+
+        function should_delete(value) {
+            return value === undefined || value === null;
+        }
     },
 
     _addKey: function(key) {
