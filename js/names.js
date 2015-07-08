@@ -24,4 +24,4 @@ FIRST_NAMES = [
     'Starhawk','Stewart','Tolstoy','Vonnegut','Westerweel','Willcox','Wolfe','Woodcock'
   ];
 
-  HTML_LOREM_IPSUM="<h1>This is a proposal</h1><p>Here is the text of our proposal</p>";
+  HTML_LOREM_IPSUM="<h1>Some text</h1><p><span >How would you feel if I told you that I can teach you to read? Probably you would think that you don’t need to learn how to read, the proof is that you are reading my stupid question right now, and that you’ve been reading perfectly well without my help for years. And what if I told you that I can teach you to learn? Well, as we’ve all struggled with learning, maybe you’ll listen. But, by default, people aren’t very comfortable with someone teaching them something they’ve been doing for years. This is especially disturbing considering that most of us haven’t been taught how to learn.</span></p>";
