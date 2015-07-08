@@ -14,13 +14,16 @@ CUORE.State = CUORE.Class(null, {
         return this.keys.indexOf(key) != -1;
     },
 
-    _addKey: function(key) {
-        if (this.hasKey(key)) return;
-        this.keys.push(key);
+    delete: function(key) {
+        this._removeKey(key);
+        this.persister.remove(key);
     },
 
-    _removeKey: function(key) {
-        this.keys.splice(this.keys.indexOf(key), 1);
+    retrieve: function(key) {
+        if (!this.hasKey(key)) {
+            return this._from_local(key);
+        }
+        return this.map[key];
     },
 
     save: function(key, value) {
@@ -33,6 +36,15 @@ CUORE.State = CUORE.Class(null, {
 
         this._save_in_page(key, value);
         this._save_local(key, value);
+    },
+
+    _addKey: function(key) {
+        if (this.hasKey(key)) return;
+        this.keys.push(key);
+    },
+
+    _removeKey: function(key) {
+        this.keys.splice(this.keys.indexOf(key), 1);
     },
 
     _save_in_page: function(key, value) {
@@ -48,17 +60,5 @@ CUORE.State = CUORE.Class(null, {
         var value = this.persister.retrieve(key);
         this._save_in_page(key, value);
         return value;
-    },
-
-    delete: function(key) {
-        this._removeKey(key);
-        this.persister.remove(key);
-    },
-
-    retrieve: function(key) {
-        if (!this.hasKey(key)) {
-            return this._from_local(key);
-        }
-        return this.map[key];
     }
 });
