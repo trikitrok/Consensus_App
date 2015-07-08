@@ -35,7 +35,7 @@ CUORE.State = CUORE.Class(null, {
         }
 
         this._save_in_memory(key, value);
-        this._save_local(key, value);
+        this._persist(key, value);
 
         function should_delete(value) {
             return value === undefined || value === null;
@@ -56,7 +56,7 @@ CUORE.State = CUORE.Class(null, {
         this.map[key] = value;
     },
 
-    _save_local: function(key, value) {
+    _persist: function(key, value) {
         this.persister.save(key, value);
     },
 
