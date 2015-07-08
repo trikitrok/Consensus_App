@@ -8,6 +8,7 @@ var FirstTime = CUORE.Class(CUORE.Page, {
   initializeComponents: function() {
     this.addComponent(new Involved(),'involved');
     this.addComponent(new Proposal(),'proposal');
+    this.addComponent(new Question(),'theQuestion');
   },
 
 });

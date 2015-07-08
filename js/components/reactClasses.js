@@ -77,6 +77,36 @@ ReactClasses={
 
     });
     return proposal;
+  },
+
+  question: function(){
+    var question = React.createClass({
+      displayName: "Question",
+      
+      render: function() {
+        return (
+          React.createElement("span",{"className": this.hidden()}, 
+            React.createElement("article", {
+              dangerouslySetInnerHTML: {__html: this.props.placeholder},
+              "className": "clarifying_question " 
+            }),
+            this.questionButton()
+          )
+        );
+      },
+
+      questionButton: function  () {
+        return React.createElement("button",null,this.props.action);
+      },
+
+      hidden: function () {
+        var hidden="";
+        if (!this.props.show) hidden="hidden";
+        return hidden;
+      }
+
+    });
+    return question;
   }
 
 };
