@@ -30,8 +30,9 @@ Question = CUORE.Class(CUORE.Component, {
     _prepareData: function(){
       return{
           "action": this.getText(this.actionKey),
-          "placeholder": "Some random text",
-          "show": this.show
+          "placeholder": this.getText(this.placeHolderKey),
+          "show": this.show,
+          "content": ""
         };
     },
 
@@ -39,6 +40,8 @@ Question = CUORE.Class(CUORE.Component, {
     _internationalize: function(){
       this.actionKey="proposal.question.button";
       this.setI18NKey(this.actionKey);
+      this.placeHolderKey="proposal.question.placeHolder";
+      this.setI18NKey(this.placeHolderKey);
     },
 
     _wireEvents: function() {

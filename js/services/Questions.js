@@ -13,9 +13,10 @@ Questions = CUORE.Class(CUORE.Service, {
 
     list: function(params,eventName) {
         var questions=[]
+        var aQuestion={"text": "una pregunta"};
         
         for (var i = this.count; i > 0; i--) {
-            questions.push({"text": "una pregunta"}); 
+            questions.push(aQuestion); 
         };
     
         this.emit(eventName,questions);

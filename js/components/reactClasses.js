@@ -128,20 +128,76 @@ ReactClasses={
     var question = React.createClass({
       displayName: "Question",
       
+      getInitialState: function  () {
+        return {
+          "content":this.getContent(),
+          "quoted": false
+        };
+      },
+
       render: function() {
         return (
           React.createElement("span",{"className": this.hidden()}, 
             React.createElement("article", {
-              dangerouslySetInnerHTML: {__html: this.props.placeholder},
-              "className": "clarifying_question " 
+              dangerouslySetInnerHTML: {__html: this.state.content},
+              "className": "clarifying_question",
+              "onMouseDown": this.quoteProposal 
             }),
             this.questionButton()
           )
         );
       },
 
+      quoteProposal: function  () {
+        if (this.state.quoted) return;
+        var text = this.retrieveText();
+        var stripped = text.replace(this.props.placeholder," ","");
+        var stripped = this.includeCitation() + stripped
+        this.setState({
+          "content": stripped,
+          "quoted": true
+          });
+      },
+
+      includeCitation: function  () {
+        var result="";
+        var selection = this.getSelected();
+        if (selection) result = "<blockquote><cite>"+ this.getSelected() +"</cite></blockquote>";
+        this.clearSelected();
+        return result;
+      },
+
+      clearSelected: function() {
+        var text = "";
+        if (window.getSelection) {
+          window.getSelection().removeAllRanges();
+        } else if (document.selection && document.selection.type != "Control") {
+          document.selection.empty();
+        }
+        return text;
+      },
+
+      getSelected: function() {
+        var text = "";
+        if (window.getSelection) {
+            text = window.getSelection().toString();
+        } else if (document.selection && document.selection.type != "Control") {
+            text = document.selection.createRange().text;
+        }
+        return text;
+      },
+
+      getContent: function  () {
+        if (this.props.content) return this.props.content;
+        return this.props.placeholder
+      },
+
       send: function() {
         CUORE.Bus.emit("question_addressed", this.retrieveText());
+        this.setState({
+          "content": this.props.placeholder,
+          "quoted": false
+          });
       },
 
       retrieveText: function(){
