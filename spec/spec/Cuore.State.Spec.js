@@ -57,16 +57,15 @@ describe("State", function() {
 
             it("still retrieves the value with its key after in memory state was cleared", function() {
                 aState.save(key, value);
-                clearInMemoryState(aState);
+                clearMemory(aState);
 
                 expect(aState.retrieve(key)).toEqual(value);
             });
         });
     });
 
-    function clearInMemoryState(state) {
+    function clearMemory(state) {
         state.keys = [];
         state.map = {};
     }
-
 });
