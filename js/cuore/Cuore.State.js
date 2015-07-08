@@ -21,7 +21,7 @@ CUORE.State = CUORE.Class(null, {
 
     retrieve: function(key) {
         if (!this.hasKey(key)) {
-            return this._from_local(key);
+            return this._retrieve_from_persitence(key);
         }
         return this.map[key];
     },
@@ -60,7 +60,7 @@ CUORE.State = CUORE.Class(null, {
         this.persister.save(key, value);
     },
 
-    _from_local: function(key) {
+    _retrieve_from_persitence: function(key) {
         var value = this.persister.retrieve(key);
         this._save_in_memory(key, value);
         return value;
