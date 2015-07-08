@@ -2,6 +2,7 @@ Involved = CUORE.Class(CUORE.Component, {
 
     init: function() {
       Involved.parent.init.call(this);
+      this.storeKey="person.involved.name";
       this.div = ReactClasses.involved();
       this.involved = "the person involved";
       this.addExecHandler("NAMES_generate_EXECUTED","updateInvolved");
@@ -29,11 +30,11 @@ Involved = CUORE.Class(CUORE.Component, {
     },
 
     _saveName: function(){
-      document.page.save("person.involved.name", this.involved);
+      document.page.save(this.storeKey, this.involved);
     },
     
     onEnvironmentUp: function(page) {
-      var savedName=page.retrieve("person.involved.name");
+      var savedName=page.retrieve(this.storeKey);
       if (savedName){
         this.updateInvolved(savedName);
         return;
