@@ -3,6 +3,7 @@ var FirstTime = CUORE.Class(CUORE.Page, {
   initializeServices: function() {
       this.addService(new Names());
       this.addService(new Proposals());
+      this.addService(new Questions());
   },
 
   initializeComponents: function() {

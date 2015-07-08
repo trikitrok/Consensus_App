@@ -21,6 +21,12 @@ Question = CUORE.Class(CUORE.Component, {
       this.updateRender();
     },
 
+    addressQuestion: function(text){
+      this.show=false;
+      this.updateRender();
+      this.execute("QUESTIONS","register",text);
+    },
+
     _prepareData: function(){
       return{
           "action": this.getText(this.actionKey),
@@ -36,7 +42,8 @@ Question = CUORE.Class(CUORE.Component, {
     },
 
     _wireEvents: function() {
-      this.addExecHandler("address_question","showEditor");
+      this.addExecHandler("show_question_editor","showEditor");
+      this.addExecHandler("question_addressed","addressQuestion");
     },
 
 });

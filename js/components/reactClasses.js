@@ -33,7 +33,7 @@ ReactClasses={
       },
 
       ask: function() {
-        CUORE.Bus.emit("address_question","a Question is addressed") ;
+        CUORE.Bus.emit("show_question_editor") ;
       },
 
       prevent: function(e) {
@@ -95,8 +95,17 @@ ReactClasses={
         );
       },
 
+      send: function() {
+        CUORE.Bus.emit("question_addressed", this.retrieveText());
+      },
+
+      retrieveText: function(){
+        var theNode = this.getDOMNode(); 
+        return theNode.firstChild.innerHTML;
+      },
+
       questionButton: function  () {
-        return React.createElement("button",null,this.props.action);
+        return React.createElement("button",{"onClick": this.send},this.props.action);
       },
 
       hidden: function () {
