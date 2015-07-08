@@ -34,7 +34,7 @@ CUORE.State = CUORE.Class(null, {
             return;
         }
 
-        this._save_in_page(key, value);
+        this._save_in_memory(key, value);
         this._save_local(key, value);
 
         function should_delete(value) {
@@ -51,7 +51,7 @@ CUORE.State = CUORE.Class(null, {
         this.keys.splice(this.keys.indexOf(key), 1);
     },
 
-    _save_in_page: function(key, value) {
+    _save_in_memory: function(key, value) {
         this._addKey(key);
         this.map[key] = value;
     },
@@ -62,7 +62,7 @@ CUORE.State = CUORE.Class(null, {
 
     _from_local: function(key) {
         var value = this.persister.retrieve(key);
-        this._save_in_page(key, value);
+        this._save_in_memory(key, value);
         return value;
     }
 });
