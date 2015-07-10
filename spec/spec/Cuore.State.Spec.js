@@ -28,8 +28,7 @@ describe("State", function() {
             expect(aState.retrieve(key)).toBeUndefined();
         });
 
-        describe("and  a value is stored ", function() {
-
+        describe("and a value is stored ", function() {
             beforeEach(function() {
                 value = 'any_value';
                 aState.save(key, value);
@@ -46,10 +45,27 @@ describe("State", function() {
                 expect(aState.retrieve(key)).toEqual(aNewValue);
             });
 
-            it("removes key when value is null or undefined", function() {
+            it("removes key when value is undefined", function() {
                 aState.save(key, undefined);
                 expect(aState.hasKey(key)).toBeFalsy();
             });
+
+            it("removes key when value is null", function() {
+                aState.save(key, null);
+                expect(aState.hasKey(key)).toBeFalsy();
+            });
+
+            it("still retrieves the value with its key after in memory state was cleared", function() {
+                aState.save(key, value);
+                clearMemory(aState);
+
+                expect(aState.retrieve(key)).toEqual(value);
+            });
         });
     });
+
+    function clearMemory(state) {
+        state.keys = [];
+        state.map = {};
+    }
 });

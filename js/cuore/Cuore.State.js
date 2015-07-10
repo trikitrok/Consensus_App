@@ -45,7 +45,7 @@ CUORE.State = CUORE.Class(null, {
     _from_local: function(key) {
         var fromLocal = window.localStorage.getItem(key);
 
-        if(fromLocal === null || fromLocal === undefined) {
+        if (fromLocal === null || fromLocal === undefined) {
             return;
         }
 
@@ -55,6 +55,7 @@ CUORE.State = CUORE.Class(null, {
 
     delete: function(key) {
         this._removeKey(key);
+        window.localStorage.removeItem(key);
     },
 
     retrieve: function(key) {
